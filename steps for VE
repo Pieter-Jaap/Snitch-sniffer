@@ -1,0 +1,138 @@
+pi@raspberrypi:~ $ apt-get install python3-venv
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+pi@raspberrypi:~ $ source ~/VE/bin/activate
+bash: /home/pi/VE/bin/activate: No such file or directory
+pi@raspberrypi:~ $ source ~/RSL/VE/bin/activate
+bash: /home/pi/RSL/VE/bin/activate: No such file or directory
+pi@raspberrypi:~ $ sudo apt-get install python3-venv -y
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+python3-venv is already the newest version (3.7.3-1).
+The following package was automatically installed and is no longer required:
+  python-colorzero
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 83 not upgraded.
+pi@raspberrypi:~ $ python3 -m venv /path/to/new/virtual/environment
+Error: [Errno 13] Permission denied: '/path'
+pi@raspberrypi:~ $ python3 -m venv my_env
+pi@raspberrypi:~ $ source my_env/bin/activate
+(my_env) pi@raspberrypi:~ $ which python
+/home/pi/my_env/bin/python
+(my_env) pi@raspberrypi:~ $ which pip
+/home/pi/my_env/bin/pip
+(my_env) pi@raspberrypi:~ $ pip list
+Package       Version
+------------- -------
+pip           18.1   
+pkg-resources 0.0.0  
+setuptools    40.8.0 
+(my_env) pi@raspberrypi:~ $ pip install flask
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+Collecting flask
+  Downloading https://files.pythonhosted.org/packages/8f/b6/b4fdcb6d01ee20f9cfe81dcf9d3cd6c2f874b996f186f1c0b898c4a59c04/Flask-2.0.2-py3-none-any.whl (95kB)
+    100% |████████████████████████████████| 102kB 1.6MB/s 
+Collecting itsdangerous>=2.0 (from flask)
+  Downloading https://files.pythonhosted.org/packages/9c/96/26f935afba9cd6140216da5add223a0c465b99d0f112b68a4ca426441019/itsdangerous-2.0.1-py3-none-any.whl
+Collecting click>=7.1.2 (from flask)
+  Downloading https://files.pythonhosted.org/packages/48/58/c8aa6a8e62cc75f39fee1092c45d6b6ba684122697d7ce7d53f64f98a129/click-8.0.3-py3-none-any.whl (97kB)
+    100% |████████████████████████████████| 102kB 1.7MB/s 
+Collecting Jinja2>=3.0 (from flask)
+  Downloading https://files.pythonhosted.org/packages/94/42/d8bca8e99789bcc35dfa9b03acaa8b518720d6e060163745bc2bf2ead842/Jinja2-3.0.2-py3-none-any.whl (133kB)
+    100% |████████████████████████████████| 143kB 1.6MB/s 
+Collecting Werkzeug>=2.0 (from flask)
+  Downloading https://files.pythonhosted.org/packages/1e/73/51137805d1b8d97367a8a77cae4a792af14bb7ce58fbd071af294c740cf0/Werkzeug-2.0.2-py3-none-any.whl (288kB)
+    100% |████████████████████████████████| 296kB 930kB/s 
+Collecting importlib-metadata; python_version < "3.8" (from click>=7.1.2->flask)
+  Downloading https://files.pythonhosted.org/packages/71/c2/cb1855f0b2a0ae9ccc9b69f150a7aebd4a8d815bd951e74621c4154c52a8/importlib_metadata-4.8.1-py3-none-any.whl
+Collecting MarkupSafe>=2.0 (from Jinja2>=3.0->flask)
+  Downloading https://www.piwheels.org/simple/markupsafe/MarkupSafe-2.0.1-cp37-cp37m-linux_armv7l.whl
+Collecting zipp>=0.5 (from importlib-metadata; python_version < "3.8"->click>=7.1.2->flask)
+  Downloading https://files.pythonhosted.org/packages/bd/df/d4a4974a3e3957fd1c1fa3082366d7fff6e428ddb55f074bf64876f8e8ad/zipp-3.6.0-py3-none-any.whl
+Collecting typing-extensions>=3.6.4; python_version < "3.8" (from importlib-metadata; python_version < "3.8"->click>=7.1.2->flask)
+  Downloading https://files.pythonhosted.org/packages/74/60/18783336cc7fcdd95dae91d73477830aa53f5d3181ae4fe20491d7fc3199/typing_extensions-3.10.0.2-py3-none-any.whl
+Installing collected packages: itsdangerous, zipp, typing-extensions, importlib-metadata, click, MarkupSafe, Jinja2, Werkzeug, flask
+Successfully installed Jinja2-3.0.2 MarkupSafe-2.0.1 Werkzeug-2.0.2 click-8.0.3 flask-2.0.2 importlib-metadata-4.8.1 itsdangerous-2.0.1 typing-extensions-3.10.0.2 zipp-3.6.0
+(my_env) pi@raspberrypi:~ $ pip list
+Package            Version 
+------------------ --------
+click              8.0.3   
+Flask              2.0.2   
+importlib-metadata 4.8.1   
+itsdangerous       2.0.1   
+Jinja2             3.0.2   
+MarkupSafe         2.0.1   
+pip                18.1    
+pkg-resources      0.0.0   
+setuptools         40.8.0  
+typing-extensions  3.10.0.2
+Werkzeug           2.0.2   
+zipp               3.6.0   
+(my_env) pi@raspberrypi:~ $ python ~/run_app.py
+python: can't open file '/home/pi/run_app.py': [Errno 2] No such file or directory
+(my_env) pi@raspberrypi:~ $ from flask import Flask
+from: can't read /var/mail/flask
+(my_env) pi@raspberrypi:~ $ ^C
+(my_env) pi@raspberrypi:~ $ deactivate
+pi@raspberrypi:~ $ which python
+/usr/bin/python
+pi@raspberrypi:~ $ which pip
+/usr/bin/pip
+pi@raspberrypi:~ $ python --version
+Python 2.7.16
+pi@raspberrypi:~ $ pip show pip
+Name: pip
+Version: 18.1
+Summary: The PyPA recommended tool for installing Python packages.
+Home-page: https://pip.pypa.io/
+Author: The pip developers
+Author-email: pypa-dev@groups.google.com
+License: MIT
+Location: /usr/lib/python2.7/dist-packages
+Requires: 
+Required-by: 
+pi@raspberrypi:~ $ pip install pandas
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+Collecting pandas
+  Downloading https://files.pythonhosted.org/packages/b2/4c/b6f966ac91c5670ba4ef0b0b5613b5379e3c7abdfad4e7b89a87d73bae13/pandas-0.24.2.tar.gz (11.8MB)
+    100% |████████████████████████████████| 11.8MB 23kB/s 
+Requirement already satisfied: numpy>=1.12.0 in /usr/lib/python2.7/dist-packages (from pandas) (1.16.2)
+Collecting python-dateutil>=2.5.0 (from pandas)
+  Downloading https://files.pythonhosted.org/packages/36/7a/87837f39d0296e723bb9b62bbb257d0355c7f6128853c78955f57342a56d/python_dateutil-2.8.2-py2.py3-none-any.whl (247kB)
+    100% |████████████████████████████████| 256kB 892kB/s 
+Collecting pytz>=2011k (from pandas)
+  Downloading https://files.pythonhosted.org/packages/d3/e3/d9f046b5d1c94a3aeab15f1f867aa414f8ee9d196fae6865f1d6a0ee1a0b/pytz-2021.3-py2.py3-none-any.whl (503kB)
+    100% |████████████████████████████████| 512kB 249kB/s 
+Requirement already satisfied: six>=1.5 in /usr/lib/python2.7/dist-packages (from python-dateutil>=2.5.0->pandas) (1.12.0)
+Building wheels for collected packages: pandas
+  Running setup.py bdist_wheel for pandas ... -
+/                                   
+
+-pip uninstall numpy
+/
+|\q
+^canceled
+Operation cancelled by user
+pi@raspberrypi:~ $ pip uninstall numpy
+Not uninstalling numpy at /usr/lib/python2.7/dist-packages, outside environment /usr
+Can't uninstall 'numpy'. No files were found to uninstall.
+pi@raspberrypi:~ $ pip3 install numpy
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+Requirement already satisfied: numpy in /usr/lib/python3/dist-packages (1.16.2)
+pi@raspberrypi:~ $ import pandas as pd
+bash: import: command not found
+pi@raspberrypi:~ $ import csv
+bash: import: command not found
+pi@raspberrypi:~ $ import pandas as pd
+bash: import: command not found
+pi@raspberrypi:~ $ import csv as csv
+bash: import: command not found
+pi@raspberrypi:~ $ with open('userReviews.csv', newline='') as userrev:
+bash: syntax error near unexpected token `('
+pi@raspberrypi:~ $ import csv
+bash: import: command not found
+pi@raspberrypi:~ $ python3 -m venv ~/VE
+pi@raspberrypi:~ $ source ~/VE/bin/activate
+(VE) pi@raspberrypi:~ $ 
+
