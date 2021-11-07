@@ -1,11 +1,15 @@
+# Creating a new table
 test=> CREATE TABLE movie;
 ERROR:  syntax error at or near ";"
 LINE 1: CREATE TABLE movie;
                           ^
+# The table 'movies' already exists
 test=> CREATE TABLE movies ();
 ERROR:  relation "movies" already exists
 test=> CREATE TABLE movie ();
 CREATE TABLE
+
+# Dropping the table to be able to create the table again
 test=> DROP TABLE movie;
 DROP TABLE
 test=> CREATE TABLE movie (url text, title text, ReleaseDate text, Distributor text, Starring text, Summary text, Director text, Genre text, Rating text, Runtime text, Userscore text, Metascore text, scoreCounts text);
@@ -18,8 +22,11 @@ pi@raspberrypi:~ $ psql test
 psql (11.13 (Raspbian 11.13-0+deb10u1))
 Type "help" for help.
 
+# Adding lexemes for summary
 test=> ALTER TABLE movie ADD lexemesSummary tsvector;
 ALTER TABLE
+
+# Updating the table
 test=> UPDATE TABLE movie SET lexemesSummary = to_tsvector(Summary);
 ERROR:  syntax error at or near "TABLE"
 LINE 1: UPDATE TABLE movie SET lexemesSummary = to_tsvector(Summary)...
@@ -30,6 +37,8 @@ LINE 1: UPDRATE movie SET lexemesSummary = to_tsvector(Summary);
         ^
 test=> UPDATE movie SET lexemesSummary = to_tsvector(Summary);
 UPDATE 5229
+
+# Checking what movies have a similar summary to 'potter'
 test=> SELECT url FROM movie WHERE lexemesSummary @@ to_tsquery('potter');
                     url                    
 -------------------------------------------
@@ -40,13 +49,20 @@ test=> SELECT url FROM movie WHERE lexemesSummary @@ to_tsquery('potter');
  the-tango-lesson
 (5 rows)
 
+# Adding the table by adding a rank to it
 test=> ALTER TABLE movie ADD rank float4;
 ALTER TABLE
+
+# Updating the table
 test=> UPDATE movie SET rank = ts_rank(lexemesSummary,plainto_tsquery((SELECT Summary FROM movie WHERE url='harry-potter-and-the-chamber-of-secrets')));
 UPDATE 5229
+
+# Creating the new table with the rank < 0.99 to it
 test=> CREATE TABLE recommendationsBasedOnSummaryField AS SELECT url, rank FROM movie WHERE rank < 0.99 ORDER BY rank DESC LIMIT 50;
 ERROR:  relation "recommendationsbasedonsummaryfield" already exists
 test=> CREATE TABLE recommendationsBasedOnSummaryField3 AS SELECT url, rank FROM movie WHERE rank < 0.99 ORDER BY rank DESC LIMIT 50;
 SELECT 50
+
+# Creating a copy of the table in the RSL-folder
 test=> \copy (SELECT * FROM  recommendationsBasedOnSummaryField3) to '/home/pi/RSL/top50recommendationsHarrySummary.csv' WITH csv;
 COPY 50

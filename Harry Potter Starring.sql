@@ -1,9 +1,12 @@
+# Adding a different rank to create a rank in the table for Starring
 test=> ALTER TABLE movie ADD rank2 float4;
 ALTER TABLE
 test=> ALTER TABLE movie ADD lexemesStarring tsvector;
 ALTER TABLE
 test=> UPDATE movie SET lexemesStarring = to_tsvector(Starring);
 UPDATE 5229
+
+# Getting all the movies starring 'potter'
 test=> SELECT url FROM movie WHERE lexemesStarring @@ to_tsquery('potter');
             url             
 ----------------------------
@@ -14,6 +17,7 @@ test=> SELECT url FROM movie WHERE lexemesStarring @@ to_tsquery('potter');
  the-tango-lesson
 (5 rows)
 
+# Trying to see in which other movies the actors of the movie have been playing
 test=> SELECT url FROM movie WHERE lexemesStarring @@ to_tsquery('Daniel-Radcliffe');
  url 
 -----
@@ -54,9 +58,14 @@ test=> SELECT url FROM movie WHERE lexemesStarring @@ to_tsquery('potter');
  the-tango-lesson
 (5 rows)
 
+# Updating the table 'movie' 
 test=> UPDATE movie SET rank2 = ts_rank(lexemesStarring,plainto_tsquery((SELECT Summary FROM movie WHERE url='potter')));
 UPDATE 5229
+
+# Creating the new table with a rank below 0.99
 test=> CREATE TABLE recommendationsBasedOnStarringField1 AS SELECT url, rank2 FROM movie WHERE rank < 0.99 ORDER BY rank DESC LIMIT 50;
 SELECT 50
+
+# Creating a copy of the table in the RSL-folder
 test=> \copy (SELECT * FROM recommendationsBasedOnStarringField1) to '/home/pi/RSL/top50recommendations.csv' WITH csv;
 COPY 50
